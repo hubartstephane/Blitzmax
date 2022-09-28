@@ -25,16 +25,18 @@ Repeat
   Flip
 
   'on deplace le joueur
+  Local deplacement:Int = vitesse 'on pourrait utiliser directement vitesse, mais ca aura un interet au chapitre suivant
+
   If KeyDown(Key_Up)
-    y = y - vitesse  ' on rappelle que la coordonnée Y=0 est en haut et pas en en bas. C'est pour ca qu'il y a un signe moins
+    y = y - deplacement  ' on rappelle que la coordonnée Y=0 est en haut et pas en en bas. C'est pour ca qu'il y a un signe moins
   Else If KeyDown(Key_Down)
-    y = y + vitesse
+    y = y + deplacement
   End If
 
   If KeyDown(Key_Left)
-    x = x - vitesse
+    x = x - deplacement
   Else If KeyDown(Key_Right)
-    x = x + vitesse
+    x = x + deplacement
   End If
 
   'a ce stade, rien n'empeche le joueur de sortir de l'ecran

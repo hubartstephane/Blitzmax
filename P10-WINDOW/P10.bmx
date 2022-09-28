@@ -2,8 +2,14 @@
 ' le probleme est que la vitesse de chaque ordinateur varie 
 ' donc le temps pris par une boucle d'affichage est variable
 ' si on veut que le joueur se deplace a la meme vitesse quelque soit la machine, il va falloir faire un peu de physique et utiliser le TEMPS
-
-
+' la formule est plutot simple
+'
+' distance = vitesse * duree
+'
+' on va utiliser une vitesse en pixels/seconde
+' il nous faut un temps en seconde
+'
+' on va donc essayer de calculer le temps que prends une FRAME
 
 Graphics 800,600, 0
 
@@ -13,12 +19,43 @@ Local y:Int = 300
 'la taille du joueur
 Local taille:Int = 30
 'vitesse de deplacement du joueur
-Local vitesse:Int = 3
+
+
+'------------------------------------------------------------------
+' la vitesse est maintenant exprimee en pixels par seconde
+' et c'est un nombre a virgule !
+Local vitesse:Float = 200.0
+'------------------------------------------------------------------
+
+'------------------------------------------------------------------
+' on recupere dans une variable le temps au tout debut du programme
+' plusieurs subtilités
+' MilliSecs est une fonction qui retourne le temps en millisecondes
+' Il faut diviser par 1000.0 pour avoir le nombre de secondes
+' le probleme est que MilliSecs retourne un nombre entier qui sera tres petit (largement inferieur a la seconde)
+' si on divise un nombre entier petit par un nombre plus grand (1000), on obtiendra systematiquement 0
+' Float(...) nous permet de convertir ce nombre entier en nombre a virgule
+' et donc apres la division on aura une valeur inferieure a 1, mais pas 0
+Local t1:Float = Float(MilliSecs()) / 1000.0
+'------------------------------------------------------------------
 
 Repeat
 
+  '------------------------------------------------------------------
+  ' Point A:
+  ' on recupere encore une fois le temps en seconde
+  ' on en deduit une durée
+  ' au premier passage dans cette boucle t1 et t2 sont tres proches
+  ' mais apres un passage, ca fera sens
+  Local t2:Float = Float(MilliSecs()) / 1000.0
+  Local duree:Float = (t2 - t1)
+  '------------------------------------------------------------------
+
   'on efface la zone de dessin
   Cls 
+
+  'on affiche la duree de cette frame
+  DrawText duree, 20, 20
 
   'on va dessiner en vert cette fois-ci
   SetColor 0, 255, 0
@@ -32,16 +69,25 @@ Repeat
   Flip
 
   'on deplace le joueur
+
+
+  '------------------------------------------------------------------
+  ' on calcul le nombre de pixel de deplacement grace a notre formule physique du debut
+  ' un nombre de pixels est un nombre entier, or duree et vitesse sont deux nombres a virgules
+  ' Int(...) nous permet de convertir en nombre entier
+  Local deplacement:Int = Int(duree * vitesse)
+  '------------------------------------------------------------------
+
   If KeyDown(Key_Up)
-    y = y - vitesse  ' on rappelle que la coordonnée Y=0 est en haut et pas en en bas. C'est pour ca qu'il y a un signe moins
+    y = y - deplacement  ' on rappelle que la coordonnée Y=0 est en haut et pas en en bas. C'est pour ca qu'il y a un signe moins
   Else If KeyDown(Key_Down)
-    y = y + vitesse
+    y = y + deplacement
   End If
 
   If KeyDown(Key_Left)
-    x = x - vitesse
+    x = x - deplacement
   Else If KeyDown(Key_Right)
-    x = x + vitesse
+    x = x + deplacement
   End If
 
   'a ce stade, rien n'empeche le joueur de sortir de l'ecran
@@ -59,4 +105,10 @@ Repeat
   y = Max(MinY, y)
   y = Min(MaxY, y)
 
+
+  '------------------------------------------------------------------
+  ' t2 etait le temps au tout debut de notre boucle
+  ' quand on reviendra en haut de la boucle au Point A, on aura bien calculé la durée de le boucle 
+  t1 = t2
+  '------------------------------------------------------------------
 Until KeyDown(Key_Escape)
