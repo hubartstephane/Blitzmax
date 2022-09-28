@@ -32,3 +32,9 @@ Print "la variable2 a une valeur de " + variable2
 ' on peut modifier la valeur d'une variable
 variable1 = variable1 * 2
 Print "la nouvelle valeur de variable1 est " + variable1
+
+' True  est l'equivalent d'un entier egal a 1 (il signifie vrai)
+' False est l'equivalent d'un entier egal a 0 (il signifie faux)
+' on pourra les utiliser dans des conditions (on verra ca bientot)
+Local vrai:Int = True
+Local faux:Int = False

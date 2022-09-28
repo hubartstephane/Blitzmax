@@ -29,6 +29,8 @@ For variable1 = 0 To 10
 Next
 
 
+
+
 Rem
   Step permet de modifier l'increment
 End Rem
@@ -37,10 +39,26 @@ For variable1 = 0 To 10 Step 3
 Next
 
 
+
+
 Rem
   On peut meme inverser les valeurs de depart et d'arrivee
   On peut mettre un Step negatif
 End Rem
 For variable1 = 10 To 0 Step -3
   Print "For Step reverse: variable1 = " + variable1
+Next
+
+
+
+
+
+Rem
+  On peut imbriquer les boucles entre elles
+End Rem
+Local variable2:Int = 0
+For variable1 = 0 To 4
+  For variable2 = 0 To 4
+    Print "variable1/variable2 = (" + variable1 + ", " + variable2 + ")"
+  Next
 Next
