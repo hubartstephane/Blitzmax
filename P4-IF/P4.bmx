@@ -6,15 +6,21 @@ End Rem
 
 Local variable1:Int = 10
 
+'=========================================================================================
+
 ' une condition simple
 If variable1 < 100
   Print "ce texte ne s'affiche que si la valeur de variable1 est inferieur a 100"
 End If
 
+'=========================================================================================
+
 ' une condition simple avec une EGALITE
 If variable1 = 10
   Print "ce texte s'affiche parce que la valeur de variable1 est 10"
 End If
+
+'=========================================================================================
 
 ' une condition simple avec une DIFFERENCE
 If variable1 <> 100
@@ -25,6 +31,7 @@ If Not (variable1 = 100)
   Print "pareil ici"
 End If
 
+'=========================================================================================
 
 ' une condition avec une alternative
 If variable1 > 100
@@ -33,6 +40,7 @@ Else
   Print "c'est ce texte qui va s'afficher"
 End If
 
+'=========================================================================================
 
 ' une condition avec PLUSIEURS alternative
 If variable1 = 0
@@ -43,10 +51,14 @@ Else
   Print "en fait c'est ce texte qui va s'afficher"
 End If
 
+'=========================================================================================
+
 ' tester plusieurs CONDITIONS (ici il faut que TOUTES les conditions soient vraies)
 If (variable1 = 10) And (variable1 > 0)
 	Print "on utilise AND si on veut que toutes les conditions soient vraies"
 End If
+
+'=========================================================================================
 
 ' tester plusieurs CONDITIONS (ici il suffit qu'UNE SEULE condition soit vraie)
 If (variable1 < 100) Or (variable1 > 1000)

@@ -9,6 +9,7 @@ Repeat
 Until variable1 = 10
 
 
+'=========================================================================================
 
 Rem
   les instructions While/Wend permettent de repeter du code tant qu'une condition est vraie
@@ -19,6 +20,7 @@ While variable1 <> 0
 Wend
 
 
+'=========================================================================================
 
 
 Rem
@@ -29,7 +31,7 @@ For variable1 = 0 To 10
 Next
 
 
-
+'=========================================================================================
 
 Rem
   Step permet de modifier l'increment
@@ -39,7 +41,7 @@ For variable1 = 0 To 10 Step 3
 Next
 
 
-
+'=========================================================================================
 
 Rem
   On peut meme inverser les valeurs de depart et d'arrivee
@@ -50,8 +52,7 @@ For variable1 = 10 To 0 Step -3
 Next
 
 
-
-
+'=========================================================================================
 
 Rem
   On peut imbriquer les boucles entre elles
