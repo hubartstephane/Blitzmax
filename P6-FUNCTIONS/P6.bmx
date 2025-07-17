@@ -1,3 +1,19 @@
+Function Add(a:Int, b:Int)
+	If (b == 0) Then
+		Return a
+	End If
+	
+	Return Add(a + 1, b - 1)
+
+End Function
+
+
+
+
+
+
+
+
 ' Une fonction est un bout de code que l'on va pouvoir appeller n'importe ou dans notre programme
 ' Une fonction peut recevoir des parametres qui vont changer son comportement
 ' ici:

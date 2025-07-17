@@ -1,3 +1,12 @@
+Local viewport_x:Int = 0
+Local viewport_y:Int = 0
+Local viewport_width:Int = 0
+Local viewport_height:Int = 0
+
+
+Local desktop_width = DesktopWidth()
+Local desktop_height = DesktopHeight()
+
 ' le programme suivant permettait de deplacer un joueur a la vitesse de 3 pixels par boucle d'affichage (ce qu'on a appelle une FRAME)
 ' le probleme est que la vitesse de chaque ordinateur varie 
 ' donc le temps pris par une boucle d'affichage est variable
@@ -11,7 +20,10 @@
 '
 ' on va donc essayer de calculer le temps que prends une FRAME
 
-Graphics 800,600, 0
+Global window_width  = desktop_width
+Global window_height = desktop_height
+
+Graphics window_width, window_height, 0
 
 'x et y sont les coordonnees du joueur (son centre)
 Local x:Int = 400
@@ -21,11 +33,22 @@ Local taille:Int = 30
 'vitesse de deplacement du joueur
 
 
+GetViewport(viewport_x, viewport_y, viewport_width, viewport_height)
+
+Print "viewport_x      " + viewport_x
+Print "viewport_y      " + viewport_y
+Print "viewport_width  " + viewport_width
+Print "viewport_height " + viewport_height
+
+
 '------------------------------------------------------------------
 ' la vitesse est maintenant exprimee en pixels par seconde
 ' et c'est un nombre a virgule !
 Local vitesse:Float = 200.0
 '------------------------------------------------------------------
+
+Global spaceship_angle:Float = 0
+
 
 '------------------------------------------------------------------
 ' on recupere dans une variable le temps au tout debut du programme
@@ -39,6 +62,36 @@ Local vitesse:Float = 200.0
 Local t1:Float = Float(MilliSecs()) / 1000.0
 '------------------------------------------------------------------
 
+Global spaceship:TImage = LoadImage("spaceship.png", -1)
+Global spaceship_size_factor:Float = 1.0 / 3.0
+
+Function Dessine(x:Float, y:Float, taille:Float, t:Float)
+
+	SetClsColor 0, 0, 255
+
+  Cls 
+
+	
+  DrawText t, 20, 20
+
+  SetColor 255, 255, 255
+
+	SetOrigin(100, 100)
+
+	SetRotation(spaceship_angle)
+	Local spaceship_width:Int = Float(ImageWidth(spaceship)) * spaceship_size_factor
+	Local spaceship_height:Int = Float(ImageHeight(spaceship)) * spaceship_size_factor
+	DrawImageRect(spaceship, x, y, spaceship_width, spaceship_height)
+	SetRotation(0.0)
+	
+	
+	Plot x, y
+
+  Flip
+
+End Function
+
+
 Repeat
 
   '------------------------------------------------------------------
@@ -51,22 +104,7 @@ Repeat
   Local duree:Float = (t2 - t1)
   '------------------------------------------------------------------
 
-  'on efface la zone de dessin
-  Cls 
-
-  'on affiche la duree de cette frame
-  DrawText duree, 20, 20
-
-  'on va dessiner en vert cette fois-ci
-  SetColor 0, 255, 0
-
-  'on affiche le joueur
-  'x et y sont les coordonnees du centre du joueur
-  'si on veut les coordonnees du coin (haut-gauche) du rectangle, il faut soustraire la moitie de la taille
-  DrawRect x - taille / 2, y - taille / 2, taille, taille
-
-  'on affiche l'image complete
-  Flip
+	Dessine(x, y, taille, t2)
 
   'on deplace le joueur
 
@@ -90,12 +128,22 @@ Repeat
     x = x + deplacement
   End If
 
+	If KeyDown(Key_A)
+		spaceship_angle = spaceship_angle + 100.0 * duree
+	Else If KeyDown(Key_Z)
+		spaceship_angle = spaceship_angle - 100.0 * duree
+	End If
+
   'a ce stade, rien n'empeche le joueur de sortir de l'ecran
   'on calcul les valeurs maximales et minimales acceptees pour X et Y du joueur
-  Local MinX:Int = taille / 2
-  Local MaxX:Int = 800 - taille / 2
-  Local MinY:Int = taille / 2
-  Local MaxY:Int = 600 - taille / 2
+
+	Local spaceship_width:Int = Float(ImageWidth(spaceship)) * spaceship_size_factor
+	Local spaceship_height:Int = Float(ImageHeight(spaceship)) * spaceship_size_factor
+
+  Local MinX:Int = 0
+  Local MaxX:Int = window_width - spaceship_width
+  Local MinY:Int = 0
+  Local MaxY:Int = window_height - spaceship_height
 
   'on s'assure que le joueur ne depasse pas ses valeurs
   'Max est une fonction qui retourne la valeur maxium de ses deux arguments

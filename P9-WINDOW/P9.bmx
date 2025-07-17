@@ -6,9 +6,12 @@ Local y:Int = 300
 'la taille du joueur
 Local taille:Int = 30
 'vitesse de deplacement du joueur
-Local vitesse:Int = 3
+Local vitesse:Int = 10
 
 Repeat
+
+
+
 
   'on efface la zone de dessin
   Cls 

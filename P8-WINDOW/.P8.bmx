@@ -2,6 +2,22 @@ Graphics 800,600, 0
 
 
 
+
+
+
+
+' quand on ouvre une fenetre, il y a deux 'images'
+' -celle qui est affichée
+' -celle dans laquelle on est en train de dessiner
+' comme ca, quand on dessine, si ca prends du temps, le joueur ne voit pas l'image en train d'etre modifiée
+' cette technique s'appelle le DOUBLE BUFFER
+
+Local color:Int = 0
+
+Repeat
+
+
+
   'Cls est une fonction qui efface la zone de dessin
   Cls 
 
@@ -16,7 +32,7 @@ Graphics 800,600, 0
   ' (255,   0,   0) correspond au rouge   
   ' (  0, 255,   0) correspond au vert 
   ' (  0,   0, 255) correspond au bleu
-  SetColor 255, 0, 0 
+  SetColor color, 0, 0 
 
   'DrawRect est une fonction qui dessine un rectangle
   'les deux premieres valeurs (50, 50) sont les coordonnées d'un des coins du rectangle
@@ -26,7 +42,7 @@ Graphics 800,600, 0
 
   'DrawText permet d'afficher du text
   'les deux chiffres (0, 0) correspondent a la coordonnée ou commence le texte
-  DrawText "Bonjour", 0, 0
+  DrawText "Bonjour", color + 200, color
   
   'DrawLine permet d'afficher une ligne
   'les deux premiers parametres sont les coordonnées du point de depart 
@@ -36,16 +52,12 @@ Graphics 800,600, 0
 
   'quand on a fini de dessiner le contenu de la fenetre, on inverse l'image visible et l'image du dessin
   'le joueur voit enfin tout ce que l'on a dessiner
-  'Flip
+  Flip
+
+  color = color + 1
+  If color = 256 Then
+    color = 0
+  End If
 
 
-
-' quand on ouvre une fenetre, il y a deux 'images'
-' -celle qui est affichée
-' -celle dans laquelle on est en train de dessiner
-' comme ca, quand on dessine, si ca prends du temps, le joueur ne voit pas l'image en train d'etre modifiée
-' cette technique s'appelle le DOUBLE BUFFER
-
-
-Repeat
 Until KeyDown(Key_Escape)

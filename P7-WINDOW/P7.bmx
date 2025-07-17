@@ -9,4 +9,7 @@ Graphics 800,600, 0
 ' la fenetre serait detruite immediatement. Ce n'est pas ce qu'on veut
 ' KeyDown est une Fonction qui retourne TRUE si la touche qu'on lui donne en parametre est appuyée, FALSE sinon
 Repeat
+
+
+
 Until KeyDown(Key_Escape)
